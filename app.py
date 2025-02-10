@@ -11,6 +11,7 @@ app = Flask(__name__)
 JSON_FILE = "backup_metadata.json"
 BACKUPS_PATH = "/media/Data/Backups/"
 
+
 # Filters Start
 
 def format_size(bytes_size):
@@ -21,14 +22,17 @@ def format_size(bytes_size):
         bytes_size /= 1024.0
     return f"{bytes_size:.2f} PB"
 
+
 def formatTimestamp(timestamp):
     """Convert timestamp to human-readable one"""
     dt = datetime.strptime(timestamp, "%Y%m%d-%H%M%S")
     formatted_timestamp = dt.strftime("%d.%m.%Y %H:%M:%S")
     return formatted_timestamp
 
+
 app.jinja_env.filters['filesizeformat'] = format_size  # Register filter
 app.jinja_env.filters['timestampformat'] = formatTimestamp
+
 
 # Filters End
 
@@ -43,6 +47,7 @@ def load_metadata():
         print(f"Error loading JSON metadata: {e}")
         return {}
 
+
 @app.route("/")
 def index():
     """
@@ -51,6 +56,7 @@ def index():
     """
     data = load_metadata()
     return render_template("index.html", data=data, selected_device=None, backups=None)
+
 
 @app.route("/device/<device>")
 def device_view(device):
@@ -61,6 +67,7 @@ def device_view(device):
     data = load_metadata()
     backups = data.get(device, [])
     return render_template("index.html", data=data, selected_device=device, backups=backups)
+
 
 @app.route("/device/<device>/backup/<backup_name>/log")
 def view_log(device, backup_name):
@@ -87,7 +94,8 @@ def view_log(device, backup_name):
         abort(500, description=f"Error reading log file: {e}")
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
-@app.route('/device/<device>/backup/<backup_name>/tree')
+
+@app.route('/device/<device>/backup/<backup_name>/tree/<path:path>')
 def view_backup_tree(device, backup_name):
     base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
@@ -95,7 +103,6 @@ def view_backup_tree(device, backup_name):
 
     if not os.path.exists(base_backup_path):
         return "Backup not found", 404
-
 
     # Get the directory path from the query parameters (if available)
     current_path = request.args.get('path', "")  # Defaults to the root of the backup
@@ -106,7 +113,9 @@ def view_backup_tree(device, backup_name):
     # Generate the file tree for the current directory
     file_tree = generate_file_tree(device, backup_name, current_path)
 
-    return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name, file_tree=file_tree, current_path=current_path)
+    return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name,
+                           file_tree=file_tree, current_path=current_path)
+
 
 @app.route('/device/<device>/backup/<backup_name>/file/<path:path>')
 def view_backup_file(device, backup_name, rel_path):
@@ -130,7 +139,9 @@ def view_backup_file(device, backup_name, rel_path):
         return f"Error reading file: {e}", 500
 
     # Pass the content to the template
-    return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name, path=rel_path, file_content=file_content)
+    return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name,
+                           path=rel_path, file_content=file_content)
+
 
 def generate_file_tree(device, backup_name, rel_path):
     """
@@ -161,7 +172,6 @@ def generate_file_tree(device, backup_name, rel_path):
             })
 
     return file_tree
-
 
 
 if __name__ == "__main__":
