@@ -76,7 +76,7 @@ def get_backup_size(folder):
     result = subprocess.check_output(['du', '-sb', folder])
 
     # Split the result and decode to get the size in human-readable format
-    return result.split()[0].decode('utf-8')
+    return int(result.split()[0].decode('utf-8'))
 
 
 def generate_backup_metadata(existing_data):
