@@ -6,6 +6,10 @@
     font-family: 'Arial', sans-serif;
 }
 
+body {
+    overflow: hidden; /* Prevent the page from scrolling */
+}
+
 /* Wrapper */
 #wrapper {
     display: flex;
@@ -217,6 +221,40 @@ table th.log-col, table td.log-col {
     background-color: transparent;
 }
 
+.log-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: 50vh; /* You can adjust the max height */
+    overflow-x: auto; /* Enables both horizontal and vertical scrollbars */
+    padding: 1em;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
+.log-container pre {
+    flex-grow: 1; /* Allow the log content to take up remaining space */
+    overflow: auto; /* Scrollbars will appear for pre-content if necessary */
+    white-space: pre-wrap; /* Wrap text if it overflows horizontally */
+    word-wrap: break-word;
+}
+
+.log-container p {
+    align-self: flex-start;
+    margin-top: 1em;
+}
+
+.arrange-horizontally > * {
+    display: inline-block;
+    text-align: center;
+}
+.arrange-vertically > * {
+    display: block;
+}
+
+.font-color-black {
+    color: #000000; /* Set the desired text color */
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {

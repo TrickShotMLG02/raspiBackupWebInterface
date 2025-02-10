@@ -9,18 +9,21 @@
             <a href="" class="flex-item-right">BACK</a>
         </div>
         <br>
-        <div class="container-primary transparent-background">
+        <div class="container-primary transparent-background font-color-black">
             <p><strong>Device:</strong> {{ selected_device }}</p>
             <p><strong>Start:</strong> {{ backup.start_date }}</p>
             <p><strong>End:</strong> {{ backup.end_date }}</p>
             <p><strong>Duration:</strong> {{ backup.duration }}</p>
-            <p><strong>Size:</strong> {{ backup.size }}</p>
+            <p><strong>Size:</strong> {{ backup.size | filesizeformat }}</p>
         </div>
         <br>
         <br>
         <h2>Log File Content</h2>
         <br>
-        <pre>{{ log_content }}</pre>
-        <p><a href="{{ url_for('index') }}">Back to Backup List</a></p>
+        <div class="log-container">
+            <pre>{{ log_content }}</pre>
+            <p><a href="{{ url_for('index') }}">Back to Backup List</a></p>
+        </div>
     </div>
+
 {% endblock %}
