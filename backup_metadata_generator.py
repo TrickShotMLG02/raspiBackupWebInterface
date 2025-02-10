@@ -55,7 +55,9 @@ def calculate_duration(start_date, end_date):
     start_dt = datetime.strptime(start_date, date_format)
     end_dt = datetime.strptime(end_date, date_format)
     duration = end_dt - start_dt
-    return str(duration)
+    dt = datetime.strptime(str(duration), "%H:%M:%S")
+    formatted_duration = dt.strftime("%H:%M:%S")
+    return str(formatted_duration)
 
 
 def get_backup_size(folder):
@@ -234,4 +236,6 @@ def run_metadata_generator():
     print("Backup processing complete.")
 
 if __name__ == "__main__":
-    run_metadata_generator()
+    print(calculate_duration("20250209-183420", "20250209-184608"))
+
+    #run_metadata_generator()
