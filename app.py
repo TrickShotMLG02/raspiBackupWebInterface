@@ -16,10 +16,13 @@ BACKUPS_PATH = "/media/Data/Backups/"
 
 def format_size(bytes_size):
     """Convert bytes to a human-readable format (KB, MB, GB, etc.)."""
+
+    factor = 1000.0  # 1024.0
+
     for unit in ["B", "KB", "MB", "GB", "TB"]:
-        if bytes_size < 1024.0:
+        if bytes_size < factor:
             return f"{bytes_size:.2f} {unit}"
-        bytes_size /= 1024.0
+        bytes_size /= factor
     return f"{bytes_size:.2f} PB"
 
 
@@ -183,7 +186,6 @@ def generate_file_tree(device, backup_name, rel_path):
             })
 
     return file_tree
-
 
 
 if __name__ == "__main__":
