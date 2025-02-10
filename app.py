@@ -109,16 +109,27 @@ def view_backup_tree(device, backup_name):
 
 @app.route('/device/<device>/backup/<backup_name>/file/<path:path>')
 def view_backup_file(device, backup_name, path):
-    backup_path = os.path.join('/path/to/backups', device, backup_name, path)
+    backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
+
+    data = load_metadata()
 
     if not os.path.exists(backup_path):
+        return "Backup not found", 404
+
+    file_path = os.path.join(backup_path, path)
+
+    if not os.path.exists(file_path):
         return "File not found", 404
 
     # Read the file content (or handle it accordingly, like displaying text or downloading)
-    with open(backup_path, 'r') as file:
-        file_content = file.read()
+    try:
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+    except Exception as e:
+        return f"Error reading file: {e}", 500
 
-    return render_template('view_backup_file.html', device=device, backup_name=backup_name, path=path, file_content=file_content)
+    # Pass the content to the template
+    return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name, path=path, file_content=file_content)
 
 def generate_file_tree(path):
     """
