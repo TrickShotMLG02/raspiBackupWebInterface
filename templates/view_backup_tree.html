@@ -28,7 +28,7 @@
                             </a>
                         {% else %}
                             <!-- File link to view the file content -->
-                            <a href="{{ url_for('view_backup_file', device=selected_device, backup_name=backup_name, path=item.name) }}">
+                            <a href="{{ url_for('view_backup_file', device=selected_device, backup_name=backup_name, path=item.path) }}">
                                 {{ item.name }}
                             </a>
                         {% endif %}
