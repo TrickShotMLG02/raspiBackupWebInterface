@@ -74,4 +74,4 @@ def view_log(device, backup_name):
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5486)
+    app.run(host="0.0.0.0", debug=True, port=5486)
