@@ -8,6 +8,16 @@ app = Flask(__name__)
 JSON_FILE = "/media/Data/Backups/backup_metadata.json"
 JSON_FILE = "backup_metadata.json"
 
+def format_size(bytes_size):
+    """Convert bytes to a human-readable format (KB, MB, GB, etc.)."""
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
+        if bytes_size < 1024.0:
+            return f"{bytes_size:.2f} {unit}"
+        bytes_size /= 1024.0
+    return f"{bytes_size:.2f} PB"
+
+app.jinja_env.filters['filesizeformat'] = format_size  # Register filter
+
 def load_metadata():
     """Load backup metadata from the JSON file."""
     if not os.path.exists(JSON_FILE):

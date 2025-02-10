@@ -14,6 +14,7 @@
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Duration</th>
+                    <th>Size</th>
                     <th>Valid</th>
                     <th class="log-col">Log</th>
                 </tr>
@@ -26,6 +27,7 @@
                         <td>{{ backup.start_date }}</td>
                         <td>{{ backup.end_date }}</td>
                         <td>{{ backup.duration }}</td>
+                        <td>{{ backup.size | filesizeformat }}</td>  <!-- Format bytes to human-readable size -->
                         <td>{{ "Yes" if backup.valid else "No" }}</td>
                         <td class="log-col">
                             {% if backup.valid %}
