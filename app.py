@@ -91,6 +91,9 @@ def view_log(device, backup_name):
 def view_backup_tree(device, backup_name, rel_path):
     base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
+    if not rel_path:
+        rel_path = ""
+
     data = load_metadata()
 
     if not os.path.exists(base_backup_path):
