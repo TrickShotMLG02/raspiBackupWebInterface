@@ -236,6 +236,4 @@ def run_metadata_generator():
     print("Backup processing complete.")
 
 if __name__ == "__main__":
-    print(calculate_duration("20250209-183420", "20250209-184608"))
-
-    #run_metadata_generator()
+    run_metadata_generator()
