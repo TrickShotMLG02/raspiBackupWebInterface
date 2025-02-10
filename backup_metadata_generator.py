@@ -3,6 +3,7 @@ import os
 import json
 import sqlite3
 from datetime import datetime
+import subprocess
 
 # Configuration
 BACKUP_DIR = "/media/Data/Backups/"  # Base directory containing all device folders
@@ -60,7 +61,7 @@ def calculate_duration(start_date, end_date):
     return str(formatted_duration)
 
 
-def get_backup_size(folder):
+def get_backup_size_old(folder):
     total_size = 0
     for dirpath, _, filenames in os.walk(folder):
         for f in filenames:
@@ -68,6 +69,15 @@ def get_backup_size(folder):
             if os.path.isfile(fp):
                 total_size += os.path.getsize(fp)
     return total_size
+
+
+def get_backup_size(folder):
+    # Use 'du -sb' to get the byte size of the folder
+    result = subprocess.check_output(['du', '-sb', folder])
+
+    # Split the result and decode to get the size in human-readable format
+    return result.split()[0].decode('utf-8')
+
 
 def generate_backup_metadata(existing_data):
     """
