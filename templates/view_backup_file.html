@@ -6,7 +6,7 @@
     <div id="content">
         <div class="container-primary">
             <h3>Viewing File: {{ rel_path }}</h3>
-            <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup_name) }}?path={{ rel_path | dirname }}" class="flex-item-right">Back to Directory</a>
+            <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup_name) }}?path={{ rel_path }}" class="flex-item-right">Back to Directory</a>
         </div>
         <br>
 
