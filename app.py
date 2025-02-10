@@ -71,7 +71,7 @@ def view_log(device, backup_name):
             log_content = f.read()
     except Exception as e:
         abort(500, description=f"Error reading log file: {e}")
-    return render_template("view_log.html", device=device, backup=backup, log_content=log_content)
+    return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)

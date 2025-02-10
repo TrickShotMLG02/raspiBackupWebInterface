@@ -5,6 +5,7 @@
 {% block content %}
     {% if selected_device %}
         <h1>Device: {{ selected_device }}</h1>
+        <br>
         {% if backups and backups|length > 0 %}
             <table class="sortable">
                 <thead>
@@ -45,6 +46,7 @@
         {% endif %}
     {% else %}
         <h1>Welcome to the Backup Dashboard</h1>
+        <br>
         <p>Select a device from the sidebar to view backup information.</p>
     {% endif %}
 {% endblock %}

@@ -95,6 +95,7 @@
     border-radius: 10px;
     margin: 1em;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;  /* Ensure content can scroll if needed */
 }
 
 /* Footer */
@@ -147,6 +148,73 @@ table th.log-col, table td.log-col {
     position: relative;
     padding-right: 20px;
     cursor: pointer;
+}
+
+.container-primary {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 1em 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.container-primary h4 {
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.container-primary h3 {
+    font-size: 1.17em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.container-primary h2 {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.container-primary h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
+/* Styling the link inside the container */
+.container-primary a {
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+/* Hover effect for the link */
+.container-primary a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.flex-item-right {
+    margin-left: auto;
+}
+
+.flex-item-left {
+    margin-right: auto;
+}
+
+.transparent-background {
+    background-color: transparent;
 }
 
 
