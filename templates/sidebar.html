@@ -1,0 +1,16 @@
+<div id="sidebar">
+    <h3>Devices</h3>
+    <ul>
+        {% if data %}
+            {% for device in data.keys() %}
+                <li>
+                    <a href="{{ url_for('device_view', device=device) }}">
+                        {{ device }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>No devices found.</li>
+        {% endif %}
+    </ul>
+</div>

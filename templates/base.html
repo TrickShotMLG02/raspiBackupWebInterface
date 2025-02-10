@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Backup Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div id="wrapper">
+    <!-- Navbar -->
+    {% include "navbar.html" %}
+
+    <div id="main-container">
+        <!-- Sidebar -->
+        {% include "sidebar.html" %}
+
+        <!-- Main Content -->
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include "footer.html" %}
+</div>
+</body>
+</html>

@@ -1,52 +1,48 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Backup History</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        table { border-collapse: collapse; margin-bottom: 2em; }
-        table, th, td { border: 1px solid #ccc; padding: 8px; }
-        th { background: #f0f0f0; }
-        h2 { margin-top: 1.5em; }
-    </style>
-</head>
-<body>
-<h1>Backup History</h1>
-{% if data %}
-    {% for device, backups in data.items() %}
-        <h2>Device: {{ device }}</h2>
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Backup Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Duration</th>
-                <th>Valid</th>
-                <th>Log</th>
-            </tr>
-            {% for backup in backups %}
+{% extends "base.html" %}
+
+{% block title %}Backup Dashboard{% endblock %}
+
+{% block content %}
+    {% if selected_device %}
+        <h1>Device: {{ selected_device }}</h1>
+        {% if backups and backups|length > 0 %}
+            <table>
+                <thead>
                 <tr>
-                    <td>{{ backup.id }}</td>
-                    <td>{{ backup.name }}</td>
-                    <td>{{ backup.start_date }}</td>
-                    <td>{{ backup.end_date }}</td>
-                    <td>{{ backup.duration }}</td>
-                    <td>{{ "Yes" if backup.valid else "No" }}</td>
-                    <td>
-                        {% if backup.valid %}
-                            <a href="{{ url_for('view_log', device=device, backup_name=backup.name) }}">View Log</a>
-                        {% else %}
-                            N/A
-                        {% endif %}
-                    </td>
+                    <th>ID</th>
+                    <th>Backup Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Duration</th>
+                    <th>Valid</th>
+                    <th>Log</th>
                 </tr>
-            {% endfor %}
-        </table>
-    {% endfor %}
-{% else %}
-    <p>No backup data found.</p>
-{% endif %}
-</body>
-</html>
+                </thead>
+                <tbody>
+                {% for backup in backups %}
+                    <tr>
+                        <td>{{ backup.id }}</td>
+                        <td>{{ backup.name }}</td>
+                        <td>{{ backup.start_date }}</td>
+                        <td>{{ backup.end_date }}</td>
+                        <td>{{ backup.duration }}</td>
+                        <td>{{ "Yes" if backup.valid else "No" }}</td>
+                        <td>
+                            {% if backup.valid %}
+                                <a href="{{ url_for('view_log', device=selected_device, backup_name=backup.name) }}">View Log</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No backups found for this device.</p>
+        {% endif %}
+    {% else %}
+        <h1>Welcome to the Backup Dashboard</h1>
+        <p>Select a device from the sidebar to view backup information.</p>
+    {% endif %}
+{% endblock %}
