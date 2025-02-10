@@ -33,7 +33,7 @@
                         <td>{{ "Yes" if backup.valid else "No" }}</td>
                         <td class="backup-col">
                             {% if backup.valid %}
-                                <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup.name) }}">View Backup</a>
+                                <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup.name, "") }}">View Backup</a>
                             {% else %}
                                 N/A
                             {% endif %}
