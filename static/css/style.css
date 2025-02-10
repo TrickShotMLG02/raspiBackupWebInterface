@@ -270,6 +270,27 @@ table th.log-col, table td.log-col {
     margin-top: 1em;
 }
 
+.file-tree {
+    list-style-type: none; /* Remove the dots */
+    margin: 0;
+    padding: 0;
+}
+
+/* Add custom spacing between the items */
+.file-tree-item {
+    margin-bottom: 10px; /* Adjust spacing between items */
+}
+
+/* Optional: Style the links */
+.file-tree-item a {
+    text-decoration: none; /* Remove underlines */
+    color: #007bff; /* Change link color */
+}
+
+.file-tree-item a:hover {
+    text-decoration: underline; /* Optional: underline on hover */
+}
+
 .file-content-container {
     display: flex;
     flex-direction: column;
