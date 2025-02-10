@@ -3,54 +3,48 @@
 {% block title %}Backup Files for {{ selected_device }}{% endblock %}
 
 {% block content %}
-    <div id="content">
-        <div class="container-primary">
-            <h3>Backup Tree for: {{ backup_name }} on {{ device }}</h3>
-            <a href="javascript:history.back()" class="flex-item-right">Back to Backup List</a>
-        </div>
-        <br>
+<div id="content">
+    <div class="container-primary">
+        <h3>Backup Tree for: {{ backup_name }} on {{ device }}</h3>
+        <a href="javascript:history.back()" class="flex-item-right">Back to Backup List</a>
+    </div>
+    <br>
 
-        <div class="container-primary transparent-background font-color-black">
-            <p><strong>Device:</strong> {{ device }}</p>
-            <p><strong>Backup:</strong> {{ backup_name }}</p>
-        </div>
-
-        <br>
-
-        <div class="backup-container">
-            <ul class="file-tree">
-                {% for item in file_tree %}
-                    <li>
-                        {% if item.type == 'directory' %}
-                            <details>
-                                <summary>{{ item.name }}/</summary>
-                                <ul>
-                                    {% for child in item.children %}
-                                        <li>
-                                            {% if child.type == 'directory' %}
-                                                <details>
-                                                    <summary>{{ child.name }}/</summary>
-                                                    <ul>
-                                                        {% for subchild in child.children %}
-                                                            <li><a href="{{ url_for('view_backup_file', device=device, backup_name=backup_name, path=subchild.name) }}">{{ subchild.name }}</a></li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </details>
-                                            {% else %}
-                                                <a href="{{ url_for('view_backup_file', device=device, backup_name=backup_name, path=child.name) }}">{{ child.name }}</a>
-                                            {% endif %}
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </details>
-                        {% else %}
-                            <a href="{{ url_for('view_backup_file', device=device, backup_name=backup_name, path=item.name) }}">{{ item.name }}</a>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
+    <div class="container-primary transparent-background font-color-black">
+        <p><strong>Device:</strong> {{ device }}</p>
+        <p><strong>Backup:</strong> {{ backup_name }}</p>
     </div>
 
-{% endblock %}
+    <br>
+
+    <div class="backup-container">
+        <ul class="file-tree">
+            {% for item in file_tree %}
+            <li>
+                {% if item.type == 'directory' %}
+                {% if item.name == '..' %}
+                <!-- Parent directory link -->
+                <a href="{{ url_for('view_backup_tree', device=device, backup_name=backup_name) + '?path=' + item.path }}">.. (Go Up)</a>
+                {% else %}
+                <details>
+                    <summary>{{ item.name }}/</summary>
+                    <ul>
+                        {% for child in item.children %}
+                            <li>
+                                {% if child.type == 'directory' %}
+                                    <details>
+                                        <summary>{{ child.name }}/</summary>
+                                        <ul>
+                                            {% for subchild in child.children %}
+                                                <li><a href="{{ url_for('view_backup_file', device=device, backup_name=backup_name, path=subchild.name) }}">{{ subchild.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </details>
+                                {% else %}
+                                    <a href="{{ url_for('view_backup_file', device=device, backup_name=backup_name, path=child.name) }}">{{ child.name }}</a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+

@@ -118,21 +118,36 @@ def generate_file_tree(path):
     """
     file_tree = []
 
-    for item in os.listdir(path):
+    # Get the list of files and directories, sorted by name
+    items = sorted(os.listdir(path))
+
+    # Add "Parent" link to go up one directory
+    parent_dir = os.path.dirname(path)
+    if parent_dir != path:
+        file_tree.append({
+            'type': 'directory',
+            'name': '..',  # Parent directory link
+            'path': parent_dir
+        })
+
+    for item in items:
         item_path = os.path.join(path, item)
         if os.path.isdir(item_path):
             file_tree.append({
                 'type': 'directory',
                 'name': item,
+                'path': item_path,
                 'children': generate_file_tree(item_path)  # Recursively add subdirectories and files
             })
         else:
             file_tree.append({
                 'type': 'file',
-                'name': item
+                'name': item,
+                'path': item_path
             })
 
     return file_tree
+
 
 
 if __name__ == "__main__":
