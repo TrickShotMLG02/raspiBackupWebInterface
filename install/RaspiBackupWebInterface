@@ -11,7 +11,7 @@
 
 # Configuration
 SERVICE_NAME="RaspiBackupWebInterface"
-USER="pi"
+USER="root"
 WORKING_DIR="/media/Data/Backups/raspiBackupWebInterface"
 EXEC_CMD="pipenv run python $WORKING_DIR/app.py"
 PID_FILE="/var/run/$SERVICE_NAME.pid"

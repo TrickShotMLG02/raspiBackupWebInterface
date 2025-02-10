@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-User=pi
+User=root
 WorkingDirectory=/media/Data/Backups/raspiBackupWebInterface
 ExecStart=pipenv run python /media/Data/Backups/raspiBackupWebInterface/app.py
 Restart=always
