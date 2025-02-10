@@ -87,8 +87,8 @@ def view_log(device, backup_name):
         abort(500, description=f"Error reading log file: {e}")
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
-@app.route('/device/<device>/backup/<backup_name>/tree/<path>')
-def view_backup_tree(device, backup_name, rel_path):
+@app.route('/device/<device>/backup/<backup_name>/tree')
+def view_backup_tree(device, backup_name):
     base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
     data = load_metadata()
@@ -96,15 +96,19 @@ def view_backup_tree(device, backup_name, rel_path):
     if not os.path.exists(base_backup_path):
         return "Backup not found", 404
 
-    if not os.path.exists(os.path.join(base_backup_path, rel_path)):
+
+    # Get the directory path from the query parameters (if available)
+    current_path = request.args.get('path', "")  # Defaults to the root of the backup
+
+    if not os.path.exists(os.path.join(base_backup_path, current_path)):
         return "Directory not found", 404
 
     # Generate the file tree for the current directory
-    file_tree = generate_file_tree(device, backup_name, rel_path)
+    file_tree = generate_file_tree(device, backup_name, current_path)
 
-    return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name, file_tree=file_tree, current_path=rel_path)
+    return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name, file_tree=file_tree, current_path=current_path)
 
-@app.route('/device/<device>/backup/<backup_name>/file/<path>')
+@app.route('/device/<device>/backup/<backup_name>/file/<path:path>')
 def view_backup_file(device, backup_name, rel_path):
     base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
@@ -127,7 +131,6 @@ def view_backup_file(device, backup_name, rel_path):
 
     # Pass the content to the template
     return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name, path=rel_path, file_content=file_content)
-
 
 def generate_file_tree(device, backup_name, rel_path):
     """
