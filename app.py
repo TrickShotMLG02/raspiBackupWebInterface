@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 # Path to your JSON metadata file.
 JSON_FILE = "backup_metadata.json"
+BACKUPS_PATH = "/media/Data/Backups/"
 
 # Filters Start
 
@@ -85,6 +86,54 @@ def view_log(device, backup_name):
     except Exception as e:
         abort(500, description=f"Error reading log file: {e}")
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
+
+@app.route('/device/<device>/backup/<backup_name>/tree')
+def view_backup_tree(device, backup_name):
+    backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
+
+    if not os.path.exists(backup_path):
+        return "Backup not found", 404
+
+    # Get the file tree (list of directories and files)
+    file_tree = generate_file_tree(backup_path)
+
+    return render_template('view_backup_tree.html', device=device, backup_name=backup_name, file_tree=file_tree)
+
+@app.route('/device/<device>/backup/<backup_name>/file/<path:path>')
+def view_backup_file(device, backup_name, path):
+    backup_path = os.path.join('/path/to/backups', device, backup_name, path)
+
+    if not os.path.exists(backup_path):
+        return "File not found", 404
+
+    # Read the file content (or handle it accordingly, like displaying text or downloading)
+    with open(backup_path, 'r') as file:
+        file_content = file.read()
+
+    return render_template('view_backup_file.html', device=device, backup_name=backup_name, path=path, file_content=file_content)
+
+def generate_file_tree(path):
+    """
+    Recursively generate a file tree (directory and files) structure.
+    """
+    file_tree = []
+
+    for item in os.listdir(path):
+        item_path = os.path.join(path, item)
+        if os.path.isdir(item_path):
+            file_tree.append({
+                'type': 'directory',
+                'name': item,
+                'children': generate_file_tree(item_path)  # Recursively add subdirectories and files
+            })
+        else:
+            file_tree.append({
+                'type': 'file',
+                'name': item
+            })
+
+    return file_tree
+
 
 if __name__ == "__main__":
     backup_metadata_generator.run_metadata_generator()

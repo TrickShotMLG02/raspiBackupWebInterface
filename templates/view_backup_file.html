@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Viewing File: {{ path }}{% endblock %}
+
+{% block content %}
+    <div id="content">
+        <div class="container-primary">
+            <h3>Viewing File: {{ path }}</h3>
+            <a href="javascript:history.back()" class="flex-item-right">Back to Backup Tree</a>
+        </div>
+        <br>
+
+        <div class="container-primary transparent-background font-color-black">
+            <pre>{{ file_content }}</pre>
+        </div>
+
+    </div>
+
+{% endblock %}

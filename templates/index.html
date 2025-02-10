@@ -17,6 +17,7 @@
                     <th>Duration</th>
                     <th>Size</th>
                     <th>Restorable</th>
+                    <th class="backup-col">Backup</th>
                     <th class="log-col">Log</th>
                 </tr>
                 </thead>
@@ -30,6 +31,13 @@
                         <td>{{ backup.duration }}</td>
                         <td>{{ backup.size | filesizeformat }}</td>  <!-- Format bytes to human-readable size -->
                         <td>{{ "Yes" if backup.valid else "No" }}</td>
+                        <td class="backup-col">
+                            {% if backup.valid %}
+                                <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup.name) }}">View Backup</a>
+                            {% else %}
+                                N/A
+                            {% endif %}
+                        </td>
                         <td class="log-col">
                             {% if backup.valid %}
                                 <a href="{{ url_for('view_log', device=selected_device, backup_name=backup.name) }}">View Log</a>
