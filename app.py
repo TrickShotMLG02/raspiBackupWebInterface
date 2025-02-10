@@ -177,4 +177,4 @@ def generate_file_tree(device, backup_name, rel_path):
 
 if __name__ == "__main__":
     backup_metadata_generator.run_metadata_generator()
-    app.run(host="0.0.0.0", debug=True, port=5486)
+    app.run(host="0.0.0.0", debug=False, port=5486)
