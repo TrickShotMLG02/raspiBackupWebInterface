@@ -225,10 +225,13 @@ def save_to_sqlite(data):
     print(f"Backup metadata saved to {DB_FILE}")
 
 
-if __name__ == "__main__":
+def run_metadata_generator():
     old_data = load_existing_json()
     current_data = generate_backup_metadata(old_data)
     merged_data = merge_backup_data(old_data, current_data)
     save_to_json(merged_data)
     save_to_sqlite(merged_data)
     print("Backup processing complete.")
+
+if __name__ == "__main__":
+    run_metadata_generator()

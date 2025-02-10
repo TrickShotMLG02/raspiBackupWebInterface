@@ -2,6 +2,8 @@ from flask import Flask, render_template, abort, url_for
 import json
 import os
 
+import backup_metadata_generator
+
 app = Flask(__name__)
 
 # Path to your JSON metadata file.
@@ -74,4 +76,5 @@ def view_log(device, backup_name):
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
 if __name__ == "__main__":
+    backup_metadata_generator.run_metadata_generator()
     app.run(host="0.0.0.0", debug=True, port=5486)
