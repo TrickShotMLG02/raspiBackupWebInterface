@@ -40,4 +40,11 @@ This project provides a web interface to browse and manage backups created using
    ```sh
    sudo systemctl start/stop/status raspiBackupWebInterface
    ```
+
    
+
+# Preview
+![alt-text](https://i.imgur.com/I8zZOVP.png)
+![alt-text](https://i.imgur.com/qxtmelj.png)
+![alt-text](https://i.imgur.com/VULDbG2.png)
+![alt-text](https://i.imgur.com/dIFSjPk.png)
