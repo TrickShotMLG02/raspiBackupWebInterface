@@ -21,7 +21,7 @@
         <div class="backup-container">
             <ul class="file-tree">
                 {% for item in file_tree %}
-                    <li>
+                    <!--<li>-->
                         {% if item.type == 'directory' %}
                             <!-- Directory link to navigate into the directory -->
                             <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup_name, path=item.path) }}">
@@ -33,7 +33,7 @@
                                 {{ item.name }}
                             </a>
                         {% endif %}
-                    </li>
+                    <!--</li>-->
                 {% endfor %}
             </ul>
         </div>
