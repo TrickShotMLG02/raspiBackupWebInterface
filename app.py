@@ -105,7 +105,7 @@ def view_backup_tree(device, backup_name):
         return "Backup not found", 404
 
     # Get the directory path from the query parameters (if available)
-    current_path = request.args.get('path', "")  # Defaults to the root of the backup
+    current_path = request.args.get('path', "/")  # Defaults to the root of the backup
 
     if not os.path.exists(os.path.join(base_backup_path, current_path)):
         return "Directory not found", 404
