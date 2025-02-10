@@ -6,8 +6,8 @@ from datetime import datetime
 
 # Configuration
 BACKUP_DIR = "/media/Data/Backups/"  # Base directory containing all device folders
-JSON_FILE = "/media/Data/Backups/backup_metadata.json"  # JSON output file
-DB_FILE = "/media/Data/Backups/backup_metadata.db"      # SQLite database file
+JSON_FILE = "backup_metadata.json"  # JSON output file
+DB_FILE = "backup_metadata.db"      # SQLite database file
 LOG_FILE_NAME = "raspiBackup.log"    # Log file name inside each backup folder
 FLAG_FILE_NAME = "raspiBackup.log"   # Flag file that marks a folder as a backup folder
 SQL_TABLE_PREFIX = ""

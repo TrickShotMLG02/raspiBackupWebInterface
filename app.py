@@ -7,7 +7,6 @@ import backup_metadata_generator
 app = Flask(__name__)
 
 # Path to your JSON metadata file.
-JSON_FILE = "/media/Data/Backups/backup_metadata.json"
 JSON_FILE = "backup_metadata.json"
 
 def format_size(bytes_size):
