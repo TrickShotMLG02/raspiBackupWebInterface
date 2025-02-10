@@ -89,20 +89,19 @@ def view_log(device, backup_name):
 
 @app.route('/device/<device>/backup/<backup_name>/tree')
 def view_backup_tree(device, backup_name):
-    backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
+    base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
 
     data = load_metadata()
 
-    if not os.path.exists(backup_path):
+    if not os.path.exists(base_backup_path):
         return "Backup not found", 404
 
-    backup_path = ""
 
     # Get the directory path from the query parameters (if available)
-    current_path = request.args.get('path', backup_path)  # Defaults to the root of the backup
+    current_path = request.args.get('path', "")  # Defaults to the root of the backup
 
-    if not os.path.exists(os.path.join(backup_path, current_path)):
+    if not os.path.exists(os.path.join(base_backup_path, current_path)):
         return "Directory not found", 404
 
     # Generate the file tree for the current directory
