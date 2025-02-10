@@ -91,10 +91,13 @@ def view_log(device, backup_name):
 def view_backup_tree(device, backup_name):
     backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
+
     data = load_metadata()
 
     if not os.path.exists(backup_path):
         return "Backup not found", 404
+
+    backup_path = ""
 
     # Get the directory path from the query parameters (if available)
     current_path = request.args.get('path', backup_path)  # Defaults to the root of the backup
@@ -103,7 +106,7 @@ def view_backup_tree(device, backup_name):
         return "Directory not found", 404
 
     # Generate the file tree for the current directory
-    file_tree = generate_file_tree(current_path)
+    file_tree = generate_file_tree(device, backup_name, current_path)
 
     return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name, file_tree=file_tree, current_path=current_path)
 
@@ -131,19 +134,20 @@ def view_backup_file(device, backup_name, path):
     # Pass the content to the template
     return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name, path=path, file_content=file_content)
 
-def generate_file_tree(rel_path):
+def generate_file_tree(device, backup_name, rel_path):
     """
     Generate a file tree (directories only) for the given directory.
     Only shows current directory contents.
     """
     file_tree = []
-    full_path = os.path.join(BACKUPS_PATH, rel_path)
+    backup_base_path = os.path.join(os.path.join(BACKUPS_PATH, device), backup_name)
+    full_path = os.path.join(backup_base_path, rel_path)
 
     items = sorted(os.listdir(full_path))  # Sort the files and directories
 
     for item in items:
         item_path = os.path.join(full_path, item)
-        rel_item_path = os.path.relpath(item_path, BACKUPS_PATH)
+        rel_item_path = os.path.relpath(item_path, backup_base_path)
 
         if os.path.isdir(item_path):
             file_tree.append({
