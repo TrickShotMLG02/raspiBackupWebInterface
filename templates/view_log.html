@@ -6,7 +6,7 @@
     <div id="content">
         <div class="container-primary">
             <h3>Log for Backup: {{ backup.name }}</h3>
-            <a href="" class="flex-item-right">BACK</a>
+            <a href="javascript:history.back()" class="flex-item-right">Back to Backup List</a>
         </div>
         <br>
         <div class="container-primary transparent-background font-color-black">
@@ -22,7 +22,6 @@
         <br>
         <div class="log-container">
             <pre>{{ log_content }}</pre>
-            <p><a href="{{ url_for('index') }}">Back to Backup List</a></p>
         </div>
     </div>
 
