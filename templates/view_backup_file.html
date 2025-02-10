@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
-{% block title %}Viewing File: {{ path }}{% endblock %}
+{% block title %}Viewing File: {{ rel_path }}{% endblock %}
 
 {% block content %}
     <div id="content">
         <div class="container-primary">
-            <h3>Viewing File: {{ path }}</h3>
-            <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup_name) }}?path={{ path | dirname }}" class="flex-item-right">Back to Directory</a>
+            <h3>Viewing File: {{ rel_path }}</h3>
+            <a href="{{ url_for('view_backup_tree', device=selected_device, backup_name=backup_name) }}?path={{ rel_path | dirname }}" class="flex-item-right">Back to Directory</a>
         </div>
         <br>
 
         <div class="container-primary transparent-background font-color-black">
             <p><strong>Device:</strong> {{ selected_device }}</p>
             <p><strong>Backup:</strong> {{ backup_name }}</p>
-            <p><strong>File Path:</strong> {{ path }}</p>
+            <p><strong>File Path:</strong> {{ rel_path }}</p>
         </div>
 
         <br>
