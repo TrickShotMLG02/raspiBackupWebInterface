@@ -95,7 +95,7 @@ def view_log(device, backup_name):
     return render_template("view_log.html", data=data, selected_device=device, backup=backup, log_content=log_content)
 
 
-@app.route('/device/<device>/backup/<backup_name>/tree/<path:path>')
+@app.route('/device/<device>/backup/<backup_name>/tree/')
 def view_backup_tree(device, backup_name):
     base_backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
