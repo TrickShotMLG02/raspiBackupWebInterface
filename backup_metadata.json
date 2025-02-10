@@ -1,0 +1,24 @@
+{
+    "raspberrypi5": [
+        {
+            "id": 1,
+            "name": "raspberrypi5-rsync-backup-20250209-183420",
+            "start_date": "20250209-183420",
+            "end_date": "20250209-184608",
+            "duration": "0:11:48",
+            "log_file": "/media/Data/Backups/raspberrypi5/raspberrypi5-rsync-backup-20250209-183420/raspiBackup.log",
+            "valid": true
+        }
+    ],
+    "raspberrypi3": [
+        {
+            "id": 1,
+            "name": "raspberrypi3-rsync-backup-20250209-183420",
+            "start_date": "20250209-183420",
+            "end_date": "20250209-184608",
+            "duration": "0:11:48",
+            "log_file": "/media/Data/Backups/raspberrypi5/raspberrypi3-rsync-backup-20250209-183420/raspiBackup.log",
+            "valid": false
+        }
+    ]
+}
