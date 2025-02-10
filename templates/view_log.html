@@ -11,8 +11,8 @@
         <br>
         <div class="container-primary transparent-background font-color-black">
             <p><strong>Device:</strong> {{ selected_device }}</p>
-            <p><strong>Start:</strong> {{ backup.start_date }}</p>
-            <p><strong>End:</strong> {{ backup.end_date }}</p>
+            <p><strong>Start:</strong> {{ backup.start_date | timestampformat }}</p>
+            <p><strong>End:</strong> {{ backup.end_date | timestampformat }}</p>
             <p><strong>Duration:</strong> {{ backup.duration }}</p>
             <p><strong>Size:</strong> {{ backup.size | filesizeformat }}</p>
         </div>

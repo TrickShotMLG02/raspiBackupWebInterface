@@ -25,8 +25,8 @@
                     <tr>
                         <td>{{ backup.id }}</td>
                         <td>{{ backup.name }}</td>
-                        <td>{{ backup.start_date }}</td>
-                        <td>{{ backup.end_date }}</td>
+                        <td>{{ backup.start_date | timestampformat }}</td>
+                        <td>{{ backup.end_date | timestampformat }}</td>
                         <td>{{ backup.duration }}</td>
                         <td>{{ backup.size | filesizeformat }}</td>  <!-- Format bytes to human-readable size -->
                         <td>{{ "Yes" if backup.valid else "No" }}</td>

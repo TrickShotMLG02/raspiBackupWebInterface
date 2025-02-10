@@ -1,6 +1,7 @@
 from flask import Flask, render_template, abort, url_for
 import json
 import os
+from datetime import datetime
 
 import backup_metadata_generator
 
@@ -8,6 +9,8 @@ app = Flask(__name__)
 
 # Path to your JSON metadata file.
 JSON_FILE = "backup_metadata.json"
+
+# Filters Start
 
 def format_size(bytes_size):
     """Convert bytes to a human-readable format (KB, MB, GB, etc.)."""
@@ -17,7 +20,16 @@ def format_size(bytes_size):
         bytes_size /= 1024.0
     return f"{bytes_size:.2f} PB"
 
+def formatTimestamp(timestamp):
+    """Convert timestamp to human-readable one"""
+    dt = datetime.strptime(timestamp, "%Y%m%d-%H%M%S")
+    formatted_timestamp = dt.strftime("%d.%m.%Y %H:%M:%S")
+    return formatted_timestamp
+
 app.jinja_env.filters['filesizeformat'] = format_size  # Register filter
+app.jinja_env.filters['timestampformat'] = formatTimestamp
+
+# Filters End
 
 def load_metadata():
     """Load backup metadata from the JSON file."""
