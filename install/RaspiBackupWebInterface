@@ -1,0 +1,64 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          RaspiBackupWebInterface
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Python Flask RaspiBackup WebInterface Service
+# Description:       Starts the RaspiBackupWebInterface Flask application using pipenv.
+### END INIT INFO
+
+# Configuration
+SERVICE_NAME="RaspiBackupWebInterface"
+USER="pi"
+WORKING_DIR="/media/Data/Backups/raspiBackupWebInterface"
+EXEC_CMD="pipenv run python $WORKING_DIR/app.py"
+PID_FILE="/var/run/$SERVICE_NAME.pid"
+
+start() {
+    echo "Starting $SERVICE_NAME..."
+    cd $WORKING_DIR || exit 1
+    su -c "$EXEC_CMD & echo \$! > $PID_FILE" $USER
+    echo "$SERVICE_NAME started."
+}
+
+stop() {
+    echo "Stopping $SERVICE_NAME..."
+    if [ -f "$PID_FILE" ]; then
+        PID=$(cat $PID_FILE)
+        kill $PID
+        rm -f $PID_FILE
+        echo "$SERVICE_NAME stopped."
+    else
+        echo "No PID file found, is the service running?"
+    fi
+}
+
+status() {
+    if [ -f "$PID_FILE" ]; then
+        PID=$(cat $PID_FILE)
+        if ps -p $PID > /dev/null; then
+            echo "$SERVICE_NAME is running with PID $PID"
+        else
+            echo "$SERVICE_NAME is not running but PID file exists."
+        fi
+    else
+        echo "$SERVICE_NAME is not running."
+    fi
+}
+
+case "$1" in
+    start) start ;;
+    stop) stop ;;
+    restart)
+        stop
+        start
+        ;;
+    status) status ;;
+    *)
+        echo "Usage: $0 {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+exit 0

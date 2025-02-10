@@ -1,0 +1,13 @@
+[Unit]
+Description=Python Flask RaspiBackup WebInterface Service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/media/Data/Backups/raspiBackupWebInterface
+ExecStart=pipenv run python /media/Data/Backups/raspiBackupWebInterface/app.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
