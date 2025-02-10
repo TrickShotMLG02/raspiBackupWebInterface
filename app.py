@@ -149,10 +149,20 @@ def generate_file_tree(device, backup_name, rel_path):
     """
     Generate a file tree (directories only) for the given directory.
     Only shows current directory contents.
+    Adds an entry to go one directory up if not in the root directory.
     """
     file_tree = []
     backup_base_path = os.path.join(os.path.join(BACKUPS_PATH, device), backup_name)
     full_path = os.path.join(backup_base_path, rel_path)
+
+    # Add an entry for the parent directory if we're not in the root directory
+    if rel_path != "" and rel_path != "/":
+        parent_path = os.path.dirname(rel_path)
+        file_tree.append({
+            'type': 'directory',
+            'name': '..',  # Represent the parent directory as ".."
+            'path': parent_path
+        })
 
     items = sorted(os.listdir(full_path))  # Sort the files and directories
 
@@ -163,16 +173,17 @@ def generate_file_tree(device, backup_name, rel_path):
             file_tree.append({
                 'type': 'directory',
                 'name': item,
-                'path': item_path
+                'path': os.path.join(rel_path, item)  # Update the path to be relative
             })
         else:
             file_tree.append({
                 'type': 'file',
                 'name': item,
-                'path': item_path
+                'path': os.path.join(rel_path, item)  # Update the path to be relative
             })
 
     return file_tree
+
 
 
 if __name__ == "__main__":
