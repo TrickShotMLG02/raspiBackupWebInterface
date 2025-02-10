@@ -6,7 +6,7 @@
     <div id="content">
         <div class="container-primary">
             <h3>Backup Tree for: {{ backup_name }} on {{ selected_device }}</h3>
-            <a href="javascript:history.back()" class="flex-item-right">Back</a>
+            <a href="{{ url_for('device_view', device=selected_device) }}" class="flex-item-right">Back to Backup List</a>
         </div>
         <br>
 
