@@ -131,29 +131,31 @@ def view_backup_file(device, backup_name, path):
     # Pass the content to the template
     return render_template('view_backup_file.html', data=data, selected_device=device, backup_name=backup_name, path=path, file_content=file_content)
 
-def generate_file_tree(path):
+def generate_file_tree(rel_path):
     """
     Generate a file tree (directories only) for the given directory.
     Only shows current directory contents.
     """
     file_tree = []
+    full_path = os.path.join(BACKUPS_PATH, rel_path)
 
-    items = sorted(os.listdir(path))  # Sort the files and directories
+    items = sorted(os.listdir(full_path))  # Sort the files and directories
 
     for item in items:
-        item_path = os.path.join(path, item)
+        item_path = os.path.join(full_path, item)
+        rel_item_path = os.path.relpath(item_path, BACKUPS_PATH)
 
         if os.path.isdir(item_path):
             file_tree.append({
                 'type': 'directory',
                 'name': item,
-                'path': item_path
+                'path': rel_item_path
             })
         else:
             file_tree.append({
                 'type': 'file',
                 'name': item,
-                'path': item_path
+                'path': rel_item_path
             })
 
     return file_tree
