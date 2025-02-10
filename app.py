@@ -160,6 +160,8 @@ def generate_file_tree(device, backup_name, rel_path):
         item_path = os.path.join(full_path, item)
         rel_item_path = os.path.relpath(item_path, backup_base_path)
 
+        print(f"item_path: {item_path}, fullpath:{full_path}, relitempath:{rel_item_path}, basepath:{backup_base_path}")
+
         if os.path.isdir(item_path):
             file_tree.append({
                 'type': 'directory',
