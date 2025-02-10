@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, url_for
+from flask import Flask, render_template, abort, url_for, request
 import json
 import os
 from datetime import datetime
@@ -91,13 +91,21 @@ def view_log(device, backup_name):
 def view_backup_tree(device, backup_name):
     backup_path = os.path.join(BACKUPS_PATH, device, backup_name)
 
+    data = load_metadata()
+
     if not os.path.exists(backup_path):
         return "Backup not found", 404
 
-    # Get the file tree (list of directories and files)
-    file_tree = generate_file_tree(backup_path)
+    # Get the directory path from the query parameters (if available)
+    current_path = request.args.get('path', backup_path)  # Defaults to the root of the backup
 
-    return render_template('view_backup_tree.html', device=device, backup_name=backup_name, file_tree=file_tree)
+    if not os.path.exists(current_path):
+        return "Directory not found", 404
+
+    # Generate the file tree for the current directory
+    file_tree = generate_file_tree(current_path)
+
+    return render_template('view_backup_tree.html', data=data, selected_device=device, backup_name=backup_name, file_tree=file_tree, current_path=current_path)
 
 @app.route('/device/<device>/backup/<backup_name>/file/<path:path>')
 def view_backup_file(device, backup_name, path):
@@ -114,30 +122,21 @@ def view_backup_file(device, backup_name, path):
 
 def generate_file_tree(path):
     """
-    Recursively generate a file tree (directory and files) structure.
+    Generate a file tree (directories only) for the given directory.
+    Only shows current directory contents.
     """
     file_tree = []
 
-    # Get the list of files and directories, sorted by name
-    items = sorted(os.listdir(path))
-
-    # Add "Parent" link to go up one directory
-    parent_dir = os.path.dirname(path)
-    if parent_dir != path:
-        file_tree.append({
-            'type': 'directory',
-            'name': '..',  # Parent directory link
-            'path': parent_dir
-        })
+    items = sorted(os.listdir(path))  # Sort the files and directories
 
     for item in items:
         item_path = os.path.join(path, item)
+
         if os.path.isdir(item_path):
             file_tree.append({
                 'type': 'directory',
                 'name': item,
-                'path': item_path,
-                'children': generate_file_tree(item_path)  # Recursively add subdirectories and files
+                'path': item_path
             })
         else:
             file_tree.append({
