@@ -91,3 +91,9 @@ table th, table td {
 table th {
     background: #f9f9f9;
 }
+/* Fixed width for the log column */
+table th.log-col, table td.log-col {
+    width: 100px;  /* Adjust as needed */
+    text-align: center;
+}
+

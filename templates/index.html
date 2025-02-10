@@ -6,7 +6,7 @@
     {% if selected_device %}
         <h1>Device: {{ selected_device }}</h1>
         {% if backups and backups|length > 0 %}
-            <table>
+            <table class="sortable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -15,7 +15,7 @@
                     <th>End Date</th>
                     <th>Duration</th>
                     <th>Valid</th>
-                    <th>Log</th>
+                    <th class="log-col">Log</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -27,7 +27,7 @@
                         <td>{{ backup.end_date }}</td>
                         <td>{{ backup.duration }}</td>
                         <td>{{ "Yes" if backup.valid else "No" }}</td>
-                        <td>
+                        <td class="log-col">
                             {% if backup.valid %}
                                 <a href="{{ url_for('view_log', device=selected_device, backup_name=backup.name) }}">View Log</a>
                             {% else %}
