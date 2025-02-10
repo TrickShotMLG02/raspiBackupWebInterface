@@ -2,7 +2,7 @@
     <h3>Devices</h3>
     <ul>
         {% if data %}
-            {% for device in data.keys() %}
+            {% for device in data.keys()|sort %}
                 <li>
                     <a href="{{ url_for('device_view', device=device) }}">
                         {{ device }}
