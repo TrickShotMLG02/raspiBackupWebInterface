@@ -98,6 +98,7 @@ body {
     background: #ffffff;
     border-radius: 10px;
     margin: 1em;
+    height: 80vh;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow-y: auto;  /* Ensure content can scroll if needed */
 }
