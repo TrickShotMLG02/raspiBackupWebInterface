@@ -244,6 +244,15 @@ table th.log-col, table td.log-col {
     margin-top: 1em;
 }
 
+.backup-list-table {
+    width: 100%;
+    max-height: 50vh; /* You can adjust the max height */
+    overflow-y: auto; /* Enables both horizontal and vertical scrollbars */
+    padding: 1em;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+}
+
 /* Backup View Container */
 .backup-container {
     display: flex;
